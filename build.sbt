@@ -4,9 +4,9 @@ version := "0.1"
 
 scalaVersion := "2.13.6"
 
-enablePlugins(JavaAppPackaging, PackPlugin)
+enablePlugins(PackPlugin)
 
-packMain := Map("run" -> "Main")
+packMain := Map("worldbank" -> "Main")
 
 scalacOptions ++= Seq(
   "-Ywarn-unused:imports",
@@ -28,7 +28,7 @@ lazy val root = (project in file("."))
       "org.tpolecat"                  %% "doobie-core"                    % doobieVersion,
       "org.tpolecat"                  %% "doobie-h2"                      % doobieVersion,
       "org.typelevel"                 %% "cats-effect"                    % "3.1.1",
-//      "org.slf4j"                      % "slf4j-nop"         % "1.6.4",
+      "com.monovore"                  %% "decline-effect"                 % "2.1.0",
       "org.wvlet.airframe"            %% "airframe-launcher"              % "19.11.1"
     )
   )
