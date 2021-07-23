@@ -1,14 +1,10 @@
 package com.worldbank.http
 
 import cats.effect.IO
-import com.worldbank.repositories.interpreters.WorldBankData.{
-  insertGdpRow,
-  insertPppRow
-}
-import com.worldbank.services.APIWorldBankData
+import com.worldbank.repositories.interpreters.WorldBankData._
+import doobie.implicits._
 import doobie.{ConnectionIO, Transactor}
 import fs2.Stream
-import doobie.implicits._
 
 final class WorldBankClient(client: WorldBankApi) {
   def getCountriesPopulation: Stream[IO, APIWorldBankData] = {

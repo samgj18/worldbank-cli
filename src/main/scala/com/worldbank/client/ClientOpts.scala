@@ -10,7 +10,7 @@ final case class ShowProcesses(all: Boolean)
 final case class Results(ingest: Boolean, calculate: Boolean)
 
 object ClientOpts {
-  val resultsOpts: Opts[Results]            =
+  val resultsOpts: Opts[Results]                         =
     Opts.subcommand("run", "Ingest data and calculate results!") {
       val ingestFlag = Opts
         .flag(
@@ -30,14 +30,6 @@ object ClientOpts {
 
       (ingestFlag, resultFlag).mapN(Results)
 
-    }
-
-  val showCommandsOpts: Opts[ShowProcesses] =
-    Opts.subcommand("ps", "Lists all available commands!") {
-      Opts
-        .flag("all", "Whether to show all running processes.", short = "a")
-        .orFalse
-        .map(ShowProcesses)
     }
 
   def transactorResource: Resource[IO, H2Transactor[IO]] =

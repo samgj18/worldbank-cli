@@ -1,65 +1,46 @@
 package com.worldbank.services
 
-import cats.effect.IO
-import io.circe._
-import io.circe.generic.semiauto._
+import com.worldbank.repositories.WorldBankData
 
-final case class ApiWorldBankDataResponse(
-    page: Int,
-    pages: Int,
-    data: List[APIWorldBankData]
+final case class CountryRate(
+    country: String,
+    value: BigDecimal
 )
 
-object ApiWorldBankDataResponse {
-  implicit val apiWorldBankDataResponseDecoder
-      : Decoder[ApiWorldBankDataResponse] = { (cursor: HCursor) =>
-    val pageInfoCursor = cursor.downN(0)
-    val dataCursor     = cursor.downN(1)
-    for {
-      page  <- pageInfoCursor.downField("page").as[Int]
-      pages <- pageInfoCursor.downField("pages").as[Int]
-      data  <- dataCursor.as[List[APIWorldBankData]]
-    } yield ApiWorldBankDataResponse(page, pages, data)
+object CountryRate {
+
+  def getRates(
+      countries: List[WorldBankData]
+  ): List[CountryRate] = {
+    countries
+      .groupBy(_.country)
+      .flatMap {
+        case (name, country) =>
+          country
+            .sortBy(_.date)
+            .sliding(2)
+            .collect {
+              case yearN :: yearNPlus1 :: Nil =>
+                (yearNPlus1.value, yearN.value) match {
+                  case (Some(yearPlus1), Some(year)) =>
+                    Some(
+                      CountryRate(
+                        country = name,
+                        value = yearPlus1 - year
+                      )
+                    )
+                  case _                             => None
+                }
+            }
+            .toList
+            .flatten
+      }
+      .toList
+      .groupBy(_.country)
+      .map(country => (country._1, country._2.map(_.value).sum))
+      .map(country => CountryRate(country._1, country._2))
+      .toList
+      .sortWith(_.value > _.value)
   }
-}
 
-final case class APIWorldBankData(
-    indicator: Indicator,
-    country: Country,
-    countryiso3code: String,
-    value: Option[BigDecimal],
-    date: String,
-    unit: Option[String],
-    obs_status: Option[String],
-    decimal: Int
-)
-
-object APIWorldBankData         {
-  implicit val apiWorldBankDataDecoder: Decoder[APIWorldBankData] =
-    deriveDecoder[APIWorldBankData]
-}
-
-final case class Country(
-    id: String,
-    value: String
-)
-
-object Country                  {
-  implicit val countryDecoder: Decoder[Country] =
-    deriveDecoder[Country]
-}
-
-final case class Indicator(
-    id: String,
-    value: String
-)
-
-object Indicator                {
-  implicit val indicatorDecoder: Decoder[Indicator] =
-    deriveDecoder[Indicator]
-}
-
-trait WorldBankService          {
-  def getCountriesPopulation(page: Int): IO[ApiWorldBankDataResponse]
-  def getCountriesGdp(page: Int): IO[ApiWorldBankDataResponse]
 }

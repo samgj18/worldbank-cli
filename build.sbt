@@ -29,6 +29,6 @@ lazy val root = (project in file("."))
       "org.tpolecat"                  %% "doobie-h2"                      % doobieVersion,
       "org.typelevel"                 %% "cats-effect"                    % "3.1.1",
       "com.monovore"                  %% "decline-effect"                 % "2.1.0",
-      "org.wvlet.airframe"            %% "airframe-launcher"              % "19.11.1"
+      "org.scalameta"                 %% "munit"                          % "0.7.27" % Test
     )
   )
