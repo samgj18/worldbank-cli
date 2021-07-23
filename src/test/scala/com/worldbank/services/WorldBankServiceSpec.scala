@@ -7,20 +7,20 @@ import munit._
 class WorldBankServiceSpec extends FunSuite {
   test("getRates") {
     val countries = List(
-      WorldBankData("America", Some(-1), 2010),
-      WorldBankData("America", Some(2), 2011),
-      WorldBankData("America", Some(3), 2012),
-      WorldBankData("Colombia", Some(2), 2010),
-      WorldBankData("Colombia", Some(3), 2012),
-      WorldBankData("Canada", Some(1), 2010),
-      WorldBankData("Canada", Some(-3), 2011),
-      WorldBankData("Canada", Some(4), 2012),
-      WorldBankData("New Zealand", Some(2), 2010),
-      WorldBankData("Qatar", Some(3), 2010),
-      WorldBankData("Rwanda", Some(2), 2010),
-      WorldBankData("Rwanda", Some(4), 2011),
-      WorldBankData("Venezuela", Some(2), 2010),
-      WorldBankData("Zimbawe", Some(-2), 2010)
+      WorldBankData("America", Some(-1), Some(2010)),
+      WorldBankData("America", Some(2), Some(2011)),
+      WorldBankData("America", Some(3), Some(2012)),
+      WorldBankData("Colombia", Some(2), Some(2010)),
+      WorldBankData("Colombia", Some(3), Some(2012)),
+      WorldBankData("Canada", Some(1), Some(2010)),
+      WorldBankData("Canada", Some(-3), Some(2011)),
+      WorldBankData("Canada", Some(4), Some(2012)),
+      WorldBankData("New Zealand", Some(2), Some(2010)),
+      WorldBankData("Qatar", Some(3), Some(2010)),
+      WorldBankData("Rwanda", Some(2), Some(2010)),
+      WorldBankData("Rwanda", Some(4), Some(2011)),
+      WorldBankData("Venezuela", Some(2), Some(2010)),
+      WorldBankData("Zimbawe", Some(-2), Some(2010))
     )
 
     val rates    = List(
