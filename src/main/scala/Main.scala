@@ -33,6 +33,7 @@ object Main
       .flatMap {
         case (transactor, interpreter) =>
           val client = new WorldBankClient(interpreter)
+
           Stream
             .eval(createTables.transact(transactor))
             .drain ++

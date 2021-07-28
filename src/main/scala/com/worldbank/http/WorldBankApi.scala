@@ -7,6 +7,17 @@ import sttp.client3._
 import sttp.client3.asynchttpclient.cats.AsyncHttpClientCatsBackend
 import sttp.client3.circe._
 
+object WorldBankApi             {
+  def make: Resource[IO, WorldBankApi] = {
+    val createBackend: IO[SttpBackend[IO, Any]] =
+      AsyncHttpClientCatsBackend[IO]()
+    val resource                                = Resource.make[IO, SttpBackend[IO, Any]](acquire =
+      createBackend
+    )(release = backend => backend.close())
+    resource.map(new WorldBankApi(_))
+  }
+}
+
 final case class ApiWorldBankDataResponse(
     page: Int,
     pages: Int,
@@ -101,16 +112,5 @@ final class WorldBankApi(backend: SttpBackend[IO, Any]) extends WorldBankHttp {
       .send(backend)
       .map(_.body)
       .flatMap(IO.fromEither)
-  }
-}
-
-object WorldBankApi {
-  def make: Resource[IO, WorldBankApi] = {
-    val createBackend: IO[SttpBackend[IO, Any]] =
-      AsyncHttpClientCatsBackend[IO]()
-    val resource                                = Resource.make[IO, SttpBackend[IO, Any]](acquire =
-      createBackend
-    )(release = backend => backend.close())
-    resource.map(new WorldBankApi(_))
   }
 }

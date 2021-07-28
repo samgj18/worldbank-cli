@@ -10,6 +10,6 @@ population growth from 2010 to 2018 and the top 3 countries by GDP growth in the
 ### How to use?
 
 - To compile run ```./compile``` in the root folder. If by any mean I fail, run this file with ```-force``` flag
-- After compiling please run ```./run --dataload``` and then ```./run --dataload```
+- After compiling please run ```./run --dataload``` and then ```./run --results```
 
 **You should be able to see the output in the console**
