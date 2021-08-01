@@ -1,7 +1,7 @@
 package com.worldbank.repositories.interpreters
 import cats.implicits._
 import com.worldbank.http.APIWorldBankData
-import com.worldbank.repositories._
+import com.worldbank.repositories.algebras.{WorldBankData, WorldBankRepository}
 import doobie.ConnectionIO
 import doobie.implicits.toSqlInterpolator
 import fs2.Stream

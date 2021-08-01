@@ -1,4 +1,4 @@
-package com.worldbank.repositories
+package com.worldbank.repositories.algebras
 
 import com.worldbank.http.APIWorldBankData
 import doobie.ConnectionIO

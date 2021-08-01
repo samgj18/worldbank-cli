@@ -1,6 +1,6 @@
 package com.worldbank.services
 
-import com.worldbank.repositories.WorldBankData
+import com.worldbank.repositories.algebras.WorldBankData
 import com.worldbank.services.CountryRate.getRates
 import munit._
 

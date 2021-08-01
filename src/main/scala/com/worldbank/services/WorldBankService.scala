@@ -1,6 +1,6 @@
 package com.worldbank.services
 
-import com.worldbank.repositories.WorldBankData
+import com.worldbank.repositories.algebras.WorldBankData
 
 final case class CountryRate(
     country: String,
