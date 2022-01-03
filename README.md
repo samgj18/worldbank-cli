@@ -1,5 +1,8 @@
 # Worldbank CLI
 
+<a href="https://typelevel.org/cats/"><img src="https://typelevel.org/cats/img/cats-badge-tiny.png" alt="Cats friendly" /></a>
+
+
 This application performs data ingestion
 from Worldbank API and executes data queries to
 print to the console the results of the top 10 countries by
